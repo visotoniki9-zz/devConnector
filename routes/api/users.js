@@ -68,7 +68,6 @@ router.post(
       console.error(err.message);
       res.status(500).send('Server error');
     }
-    res.send('User registered correctly');
     return res.status(200);
   },
 );
