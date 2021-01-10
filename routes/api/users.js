@@ -1,4 +1,6 @@
 const express = require('express');
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
 
 const router = express.Router();
 
@@ -22,12 +24,37 @@ router.post(
 
     const { name, email, password } = req.body;
 
-    // TODO See if user exists
-    // TODO Get users gravatar
-    // TODO Encrypt password
-    // TODO Return jsonwebtoken
+    try {
+      // See if user exists
+      const user = await User.findOne({ email });
 
-    res.send('User router');
+      if (user) {
+        res.status(400).json({ erros: [{ msg: 'User already exists' }] });
+      } else {
+      // Get new users gravatar
+        const avatar = gravatar.url(email, {
+          s: '200',
+          r: 'pg',
+          d: 'mm',
+        });
+
+        // New user
+        const newUser = new User({
+          name, email, avatar, password,
+        });
+        // Encrypt password
+        const salt = await bcrypt.genSalt(10);
+        newUser.password = await bcrypt.hash(password, salt);
+        // Save new user to db
+        await newUser.save();
+        res.send('User registered correctly');
+
+        // TODO Return jsonwebtoken
+      }
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
     return res.status(200);
   },
 );
