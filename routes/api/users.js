@@ -30,7 +30,9 @@ router.post(
       const user = await User.findOne({ email });
 
       if (user) {
-        return res.status(400).json({ erros: [{ msg: 'User already exists' }] });
+        return res
+          .status(400)
+          .json({ erros: [{ msg: 'User already exists' }] });
       }
       // Get new users gravatar
       const avatar = gravatar.url(email, {
@@ -61,14 +63,13 @@ router.post(
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          return res.json({ token });
         },
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      return res.status(500).send('Server error');
     }
-    return res.status(200);
   },
 );
 
