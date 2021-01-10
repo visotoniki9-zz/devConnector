@@ -29,32 +29,31 @@ router.post(
       const user = await User.findOne({ email });
 
       if (user) {
-        res.status(400).json({ erros: [{ msg: 'User already exists' }] });
-      } else {
-      // Get new users gravatar
-        const avatar = gravatar.url(email, {
-          s: '200',
-          r: 'pg',
-          d: 'mm',
-        });
-
-        // New user
-        const newUser = new User({
-          name, email, avatar, password,
-        });
-        // Encrypt password
-        const salt = await bcrypt.genSalt(10);
-        newUser.password = await bcrypt.hash(password, salt);
-        // Save new user to db
-        await newUser.save();
-        res.send('User registered correctly');
-
-        // TODO Return jsonwebtoken
+        return res.status(400).json({ erros: [{ msg: 'User already exists' }] });
       }
+      // Get new users gravatar
+      const avatar = gravatar.url(email, {
+        s: '200',
+        r: 'pg',
+        d: 'mm',
+      });
+
+      // New user
+      const newUser = new User({
+        name, email, avatar, password,
+      });
+        // Encrypt password
+      const salt = await bcrypt.genSalt(10);
+      newUser.password = await bcrypt.hash(password, salt);
+      // Save new user to db
+      await newUser.save();
+
+      // TODO Return jsonwebtoken
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
     }
+    res.send('User registered correctly');
     return res.status(200);
   },
 );
