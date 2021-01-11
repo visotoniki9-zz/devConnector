@@ -126,4 +126,34 @@ router.delete('/', auth, async (req, res) => {
   }
 });
 
+// @route PUT api/profile
+// @desc update profile experience field
+// @access Private
+router.put(
+  '/experience',
+  auth,
+  check('title', 'Title is required').notEmpty(),
+  check('company', 'Company is required'),
+  check('from', 'From date is required'),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const newExp = req.body;
+
+    try {
+      const foundProfile = await Profile.findOne({ user: req.user.id });
+      foundProfile.experience.unshift(newExp);
+      await foundProfile.save();
+      res.json(foundProfile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  },
+
+);
+
 module.exports = router;
