@@ -32,8 +32,11 @@ router.get('/me', auth, async (req, res) => {
 router.post(
   '/',
   auth,
-  // check('status', 'Status is required').notEmpty(),
-  // check('skills', 'Skills are required').notEmpty(),
+  check('company', 'Company is required').notEmpty().isLength({ max: 128 }),
+  check('website', 'Website is required').notEmpty().isLength({ max: 128 }),
+  check('location', 'Location is required').notEmpty().isLength({ max: 128 }),
+  check('status', 'Status is required').notEmpty().isLength({ max: 128 }),
+  check('skills', 'Skills are required').notEmpty().isLength({ max: 512 }),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
