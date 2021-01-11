@@ -1,0 +1,19 @@
+{
+  "company":"Google",
+  "website":"Google.com",
+  "location":"L.A USA",
+  "status":"Senion webDeveloper",
+  "skills":"Mongodb, Express, React, Node",
+  "bio":"Something...",
+  "githubUsername":"Google",
+  "experience":{
+    "title":"Senior webDeveloper",
+    "company":"Google",
+    "from":"2000/01/01"
+
+  },
+  "Education":"None",
+  "Social":{
+    "youtube":"google"
+  }
+}
