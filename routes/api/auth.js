@@ -38,15 +38,15 @@ router.post(
 
     try {
       // See if user exists
-      const user = await User.findOne({ email });
+      const foundUser = await User.findOne({ email });
 
-      if (!user) {
+      if (!foundUser) {
         return res
           .status(400)
           .json({ erros: [{ msg: 'Invalid credentials' }] });
       }
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, foundUser.password);
 
       if (!isMatch) {
         return res
@@ -57,7 +57,7 @@ router.post(
       // Return jsonwebtoken
       const payload = {
         user: {
-          id: user.id,
+          id: foundUser.id,
         },
       };
       jwt.sign(
