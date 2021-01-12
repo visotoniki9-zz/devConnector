@@ -2,10 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
-// @route GET api/posts
-// @desc  Test route
-// @access Public
 router.use('/', require('./posts/createPost'));
 router.use('/', require('./posts/getAllPosts'));
+router.use('/', require('./posts/getPostById'));
 
 module.exports = router;

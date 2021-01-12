@@ -9,7 +9,7 @@ const Profile = require('../../../models/Profile');
 // @desc delete education from profile education field
 // @access Private
 router.delete(
-  '/',
+  '/:ed_id',
   auth,
   async (req, res) => {
     try {

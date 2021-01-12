@@ -9,7 +9,7 @@ const Profile = require('../../../models/Profile');
 // @desc delete experience from profile experience field
 // @access Private
 router.delete(
-  '/',
+  '/:exp_id',
   auth,
   async (req, res) => {
     try {

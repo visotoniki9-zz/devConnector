@@ -7,7 +7,7 @@ const Profile = require('../../../models/Profile');
 // @route GET api/profile/user/:user_id
 // @desc Get profile by user id
 // @access Public
-router.get('/', async (req, res) => {
+router.get('/:user_id', async (req, res) => {
   try {
     const profile = await Profile.find({ user: req.params.user_id })
       .populate('user', ['name', 'avatar']);

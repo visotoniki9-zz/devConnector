@@ -6,6 +6,9 @@ const router = express.Router();
 const auth = require('../../../middleware/auth');
 const Profile = require('../../../models/Profile');
 
+// @route PUT api/profile/education
+// @desc add education in profile education field
+// @access Privat
 router.put(
   '/',
   auth,
