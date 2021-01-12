@@ -5,10 +5,10 @@ const Post = require('../../../models/Post');
 
 const router = express.Router();
 
-// @route GET api/posts/:id
-// @desc Get post by ID
+// @route DELETE api/posts/:id
+// @desc Delete post by ID
 // @access Private
-router.get(
+router.delete(
   '/:id',
   auth,
   async (req, res) => {
@@ -17,7 +17,11 @@ router.get(
       if (!post) {
         return res.status(404).json({ msg: 'Post not found' });
       }
-      res.json(post);
+      if (post.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'User not authorized' });
+      }
+      await post.remove();
+      return res.json({ msg: 'Post removed' });
     } catch (error) {
       console.error(error.message);
       if (error.kind === 'ObjectId') {
