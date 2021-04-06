@@ -2,10 +2,10 @@
   "name": "devConnector",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "start": "node src/main.js",
+    "server": "nodemon src/main.js"
   },
   "keywords": [],
   "author": "",
